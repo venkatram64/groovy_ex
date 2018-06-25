@@ -4,6 +4,16 @@ import groovy.json.JsonSlurper
 //https://stackoverflow.com/questions/16213242/how-do-i-make-a-call-to-the-yahoo-hourly-weather-forecast-api
 //https://github.com/xmlking/nifi-scripting
 
+/*
+https://www.logicmonitor.com/support/terminology-syntax/scripting-support/access-a-website-from-groovy/
+
+https://sites.google.com/a/athaydes.com/renato-athaydes/code/groovy---rest-client-without-using-libraries
+
+https://www.codota.com/code/java/classes/java.net.HttpURLConnection
+
+https://stackoverflow.com/questions/25692515/groovy-built-in-rest-http-client
+ */
+
 def weatherTest1() {
 
     def weather = new URL("https://query.yahooapis.com/v1/public/yql?q="
