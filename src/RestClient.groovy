@@ -108,12 +108,12 @@ def getToken(){
 
     println json
 
-    connection.setRequestMethod("POST");
-    connection.setRequestProperty("User-Agent","Mozilla/5.0");
-    connection.setRequestProperty("Content-Type","application/json; charset=UTF-8");
-    connection.setRequestProperty("Content-Length",String.valueOf(json.getBytes("UTF-8").length));
-    connection.setRequestProperty("Content-Language","en-US");
-    connection.setDoOutput(true);
+    connection.setRequestMethod("POST")
+    connection.setRequestProperty("User-Agent","Mozilla/5.0")
+    connection.setRequestProperty("Content-Type","application/json; charset=UTF-8")
+    connection.setRequestProperty("Content-Length",String.valueOf(json.getBytes("UTF-8").length))
+    connection.setRequestProperty("Content-Language","en-US")
+    connection.setDoOutput(true)
 
     connection.outputStream.withCloseable{outStream ->
         outStream.write(json.getBytes("UTF-8"))
