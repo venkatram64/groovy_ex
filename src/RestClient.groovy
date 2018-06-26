@@ -1,3 +1,4 @@
+import groovy.json.JsonOutput
 import groovy.json.JsonParserType
 import groovy.json.JsonSlurper
 ////https://stackoverflow.com/questions/12732422/adding-header-for-httpurlconnection
@@ -95,11 +96,47 @@ def weatherTest4(){
 
 }
 
+def getToken(){
+
+    def connection = new URL("https://reqres.in/api/login").openConnection() as HttpURLConnection
+    def auth = [:]
+
+    auth.email = "peter@klaven"
+    auth.password = "cityslicka"
+
+    def json = JsonOutput.toJson(auth)
+
+    println json
+
+    connection.setRequestMethod("POST");
+    connection.setRequestProperty("User-Agent","Mozilla/5.0");
+    connection.setRequestProperty("Content-Type","application/json; charset=UTF-8");
+    connection.setRequestProperty("Content-Length",String.valueOf(json.getBytes("UTF-8").length));
+    connection.setRequestProperty("Content-Language","en-US");
+    connection.setDoOutput(true);
+
+    connection.outputStream.withCloseable{outStream ->
+        outStream.write(json.getBytes("UTF-8"))
+    }
+
+    if(connection.responseCode == 200){
+        def jsonResponse = connection.inputStream.withCloseable{inStream ->
+            new JsonSlurper().parse(inStream)
+        }
+        println jsonResponse
+    }else{
+        println "Response Code: " + connection.responseCode
+        println "Response Message: " + connection.responseMessage
+    }
+}
+
 //weatherTest1()
 //weatherTest2()
 
 //weatherTest3()  //Stockholm, Sweden
 
-weatherTest4()  //Stockholm, Sweden
+//weatherTest4()  //Stockholm, Sweden
 //200: {"query":{"count":1,"created":"2018-06-24T06:35:52Z","lang":"en-US","results":{"channel":{"wind":{"chill":"64","direction":"290","speed":"14"}}}}}
 //[query:[count:1, created:2018-06-24T07:11:26Z, lang:en-US, results:[channel:[wind:[chill:64, direction:290, speed:14]]]]]
+
+getToken()
